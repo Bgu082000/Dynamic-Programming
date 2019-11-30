@@ -12,6 +12,7 @@ TA-CGCA T-ACGC-A -TAC--GCA
 
 Here, the “-” character indicates a “gap”. The characters of each string must appear in order, and no column can
 contain only gaps. For instance, the following are not valid alignments:
+
 -TA-GCC AT---GCC-
 
 TA-CGCA T--ACGC-A
