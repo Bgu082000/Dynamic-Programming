@@ -5,12 +5,15 @@ the extent to which they are aligned. To formalize this, think of a gene as bein
 strings by lining them up in columns.
 
 For example, if x = ATGCC and y = TACGCA, here are three possible alignments of x and y:
+
 -AT-GCC AT---GCC A-T--G-CC
+
 TA-CGCA T-ACGC-A -TAC--GCA
 
 Here, the “-” character indicates a “gap”. The characters of each string must appear in order, and no column can
 contain only gaps. For instance, the following are not valid alignments:
 -TA-GCC AT---GCC-
+
 TA-CGCA T--ACGC-A
 
 Any given alignment has a score. The score of an alignment is determined by a 5 × 5 scoring matrix δ, where each
