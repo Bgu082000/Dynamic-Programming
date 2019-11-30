@@ -1,0 +1,124 @@
+import java.util.Scanner;
+import java.io.*;
+import java.util.*;
+
+public class DPSequenceAlignment {
+
+	public static void main(String[] args){
+		Scanner scan = new Scanner(System.in);
+
+        String m = scan.nextLine();
+        String n = scan.nextLine();
+        int T[][] = new int[m.length()+1][n.length()+1];
+        for(int[] row: T) {
+        	Arrays.fill(row, 10000);
+        }
+        int max = opt(m.length(), n.length(), m, n, T);
+        System.out.println(max);
+        printSol(m, n, T);
+	}
+	//Determines the maximum value and fills the T[][] table for max values
+	//given values m and n
+	public static int opt(int i, int j,String m, String n, int[][] T){
+			int sum1 = -1000000;
+			int sum2 = -1000000;
+			int sum3 = -1000000;
+			if(T[i][j] != 10000) {
+				return T[i][j];
+			}
+			if(i == 0 && j == 0) {
+				T[i][j] = 0;
+				return T[i][j];
+			}
+			if(i != 0) {
+				sum1 = opt(i-1, j, m, n, T) + score(m.charAt(i-1), '-');
+			}
+			if(j != 0) {
+				sum2 = opt(i, j-1, m, n, T) + score('-', n.charAt(j-1));
+			}
+			if(i != 0 && j != 0) {
+				sum3 = opt(i-1,j-1, m, n, T) + score(m.charAt(i-1), n.charAt(j-1));
+			}
+
+			T[i][j] = Math.max(Math.max(sum1, sum2), sum3);
+			return T[i][j];
+	}
+	public static int score(char i, char j) {
+		if(i == '-' || j == '-') {
+			return -2;
+		}
+		else if(Character.getNumericValue(i) != Character.getNumericValue(j)) {
+			return -3;
+		}
+		else if (Character.getNumericValue(i) == Character.getNumericValue(j)) {
+			return 3;
+		}
+		return 0;
+	}
+	//Prints the two sequences that give the maximum value
+	public static void printSol(String m, String n, int[][] T) {
+        int length = (m.length() + n.length());
+        int index1 = length;
+        int index2 = length;
+        int i = m.length();
+        int j = n.length();
+        char[] string1 = new char[length+1];
+        char[] string2 = new char[length+1];
+        while (!(j == 0 || i == 0)) {
+            if (m.charAt(i - 1) == n.charAt(j - 1)) {
+                string1[index1--] = m.charAt(i - 1);
+                string2[index2--] = n.charAt(j - 1);
+                i--;
+                j--;
+
+            } else if (T[i - 1][j - 1] - 3 == T[i][j]) {
+                string1[index1--] = m.charAt(i - 1);
+                string2[index2--] = n.charAt(j - 1);
+                i--;
+                j--;
+
+            }
+            else if (T[i][j - 1] - 2 == T[i][j]) {
+                string1[index1--] = '-';
+                string2[index2--] = n.charAt(j - 1);
+                j--;
+
+            }
+            else if (T[i - 1][j] - 2 == T[i][j]) {
+                string1[index1--] = m.charAt(i - 1);
+                string2[index2--] = '-';
+                i--;
+
+            }
+        }
+        while (i > 0) {
+                string1[index1--] = m.charAt(i - 1);
+                string2[index2--] = '-';
+                i--;
+        }
+        while (j > 0) {
+                string1[index1--] = '-';
+                string2[index2--] = n.charAt(j - 1);
+                j--;
+        }
+        int start = 0;
+
+        for(int l = 0; l <length; l++){  //Getting rid of blanks
+            if(string1[l] == Character.MIN_VALUE || string2[l] == Character.MIN_VALUE){
+                start++;
+            }
+        }
+        for (int k = start; k <= length; k++) {
+        	if(!(Character.isWhitespace(string1[k]))) {
+        		System.out.print(string1[k]);
+        	}
+        }
+        System.out.println("");
+        for (int h = start; h <= length; h++) {
+        	if(string2[h] != ' ') {
+        		System.out.print(string2[h]);
+        	}
+        }
+    }
+
+}
