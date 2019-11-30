@@ -27,9 +27,11 @@ the highest-scoring alignment. The running time should be O(mn).
 
 
 
+
 Input Format
 
 The input consists of two lines, where each sequence a and b are the DNA sequences to be scored.
+
 
 
 Output Format
