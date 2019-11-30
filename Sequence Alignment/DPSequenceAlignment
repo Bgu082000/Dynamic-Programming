@@ -1,7 +1,7 @@
 /** Program to score two sequences based on a scoring matrix
     First finds the maximum score of the sequences.
- Then, outputs the optimal alignment.
- Uses dynamic programming when storing values in the table T[][] **/
+    Then, outputs the optimal alignment.
+    Uses dynamic programming when storing values in the table T[][] **/
 
 
 import java.util.Scanner;
