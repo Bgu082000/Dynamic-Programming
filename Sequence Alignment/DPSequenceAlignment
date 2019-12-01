@@ -80,57 +80,53 @@ public class DPSequenceAlignment {
 			if (m.charAt(i - 1) == n.charAt(j - 1)) {
 				string1[index1--] = m.charAt(i - 1);
 				string2[index2--] = n.charAt(j - 1);
-                i--;
-                j--;
-
-            } else if (T[i - 1][j - 1] - 3 == T[i][j]) {
-                string1[index1--] = m.charAt(i - 1);
-                string2[index2--] = n.charAt(j - 1);
-                i--;
-                j--;
-
-            }
-            else if (T[i][j - 1] - 2 == T[i][j]) {
-                string1[index1--] = '-';
-                string2[index2--] = n.charAt(j - 1);
-                j--;
-
-            }
-            else if (T[i - 1][j] - 2 == T[i][j]) {
-                string1[index1--] = m.charAt(i - 1);
-                string2[index2--] = '-';
-                i--;
-
-            }
-        }
-        while (i > 0) {
-                string1[index1--] = m.charAt(i - 1);
-                string2[index2--] = '-';
-                i--;
-        }
-        while (j > 0) {
-                string1[index1--] = '-';
-                string2[index2--] = n.charAt(j - 1);
-                j--;
-        }
-        int start = 0;
-
-        for(int l = 0; l <length; l++){  //Getting rid of blanks
-            if(string1[l] == Character.MIN_VALUE || string2[l] == Character.MIN_VALUE){
-                start++;
-            }
-        }
-        for (int k = start; k <= length; k++) {
-        	if(!(Character.isWhitespace(string1[k]))) {
-        		System.out.print(string1[k]);
-        	}
-        }
-        System.out.println("");
-        for (int h = start; h <= length; h++) {
-        	if(string2[h] != ' ') {
-        		System.out.print(string2[h]);
-        	}
-        }
-    }
+				i--;
+				j--;
+			}
+			else if (T[i - 1][j - 1] - 3 == T[i][j]) {
+				string1[index1--] = m.charAt(i - 1);
+				string2[index2--] = n.charAt(j - 1);
+				i--;
+				j--;
+			}
+			else if (T[i][j - 1] - 2 == T[i][j]) {
+				string1[index1--] = '-';
+				string2[index2--] = n.charAt(j - 1);
+				j--;
+			}
+			else if (T[i - 1][j] - 2 == T[i][j]) {
+				string1[index1--] = m.charAt(i - 1);
+				string2[index2--] = '-';
+				i--;
+			}
+		}
+		while (i > 0) {
+			string1[index1--] = m.charAt(i - 1);
+			string2[index2--] = '-';
+			i--;
+		}
+		while (j > 0) {
+			string1[index1--] = '-';
+			string2[index2--] = n.charAt(j - 1);
+			j--;
+		}
+		int start = 0;
+		for(int l = 0; l <length; l++){  //Getting rid of blanks
+			if(string1[l] == Character.MIN_VALUE || string2[l] == Character.MIN_VALUE){
+				start++;
+			}
+		}
+		for (int k = start; k <= length; k++) {
+			if(!(Character.isWhitespace(string1[k]))) {
+				System.out.print(string1[k]);
+			}
+		}
+		System.out.println("");
+		for (int h = start; h <= length; h++) {
+			if(string2[h] != ' ') {
+				System.out.print(string2[h]);
+			}
+		}
+	}
 
 }
