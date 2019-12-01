@@ -11,8 +11,7 @@ import java.util.*;
 public class DPSequenceAlignment {
 
 	public static void main(String[] args){
-		Scanner scan = new Scanner(System.in);
-
+			 Scanner scan = new Scanner(System.in);
         String m = scan.nextLine();
         String n = scan.nextLine();
         int T[][] = new int[m.length()+1][n.length()+1];
@@ -23,6 +22,8 @@ public class DPSequenceAlignment {
         System.out.println(max);
         printSol(m, n, T);
 	}
+
+
 	//Determines the maximum value and fills the T[][] table for max values
 	//given values m and n
 	public static int opt(int i, int j,String m, String n, int[][] T){
@@ -49,6 +50,8 @@ public class DPSequenceAlignment {
 			T[i][j] = Math.max(Math.max(sum1, sum2), sum3);
 			return T[i][j];
 	}
+
+
 	//Scoring matrix
 	public static int score(char i, char j) {
 		if(i == '-' || j == '-') {
@@ -62,6 +65,8 @@ public class DPSequenceAlignment {
 		}
 		return 0;
 	}
+
+	
 	//Prints the two sequences that give the maximum value
 	public static void printSol(String m, String n, int[][] T) {
         int length = (m.length() + n.length());
