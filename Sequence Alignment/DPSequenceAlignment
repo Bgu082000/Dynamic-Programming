@@ -71,15 +71,15 @@ public class DPSequenceAlignment {
 	public static void printSol(String m, String n, int[][] T) {
 		int length = (m.length() + n.length());
 		int index1 = length;
-        int index2 = length;
-        int i = m.length();
-        int j = n.length();
-        char[] string1 = new char[length+1];
-        char[] string2 = new char[length+1];
-        while (!(j == 0 || i == 0)) {
-            if (m.charAt(i - 1) == n.charAt(j - 1)) {
-                string1[index1--] = m.charAt(i - 1);
-                string2[index2--] = n.charAt(j - 1);
+		int index2 = length;
+		int i = m.length();
+		int j = n.length();
+		char[] string1 = new char[length+1];
+		char[] string2 = new char[length+1];
+		while (!(j == 0 || i == 0)) {
+			if (m.charAt(i - 1) == n.charAt(j - 1)) {
+				string1[index1--] = m.charAt(i - 1);
+				string2[index2--] = n.charAt(j - 1);
                 i--;
                 j--;
 
