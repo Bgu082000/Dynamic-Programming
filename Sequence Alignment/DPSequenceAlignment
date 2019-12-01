@@ -66,10 +66,10 @@ public class DPSequenceAlignment {
 		return 0;
 	}
 
-	
+
 	//Prints the two sequences that give the maximum value
 	public static void printSol(String m, String n, int[][] T) {
-        int length = (m.length() + n.length());
+		int length = (m.length() + n.length());
         int index1 = length;
         int index2 = length;
         int i = m.length();
