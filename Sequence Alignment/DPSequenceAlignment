@@ -11,16 +11,16 @@ import java.util.*;
 public class DPSequenceAlignment {
 
 	public static void main(String[] args){
-			 Scanner scan = new Scanner(System.in);
-        String m = scan.nextLine();
-        String n = scan.nextLine();
-        int T[][] = new int[m.length()+1][n.length()+1];
-        for(int[] row: T) {
-        	Arrays.fill(row, 10000);
-        }
-        int max = opt(m.length(), n.length(), m, n, T);
-        System.out.println(max);
-        printSol(m, n, T);
+		Scanner scan = new Scanner(System.in);
+		String m = scan.nextLine();
+		String n = scan.nextLine();
+		int T[][] = new int[m.length()+1][n.length()+1];
+		for(int[] row: T) {
+			Arrays.fill(row, 10000);
+		}
+		int max = opt(m.length(), n.length(), m, n, T);
+		System.out.println(max);
+		printSol(m, n, T);
 	}
 
 
