@@ -27,28 +27,27 @@ public class DPSequenceAlignment {
 	//Determines the maximum value and fills the T[][] table for max values
 	//given values m and n
 	public static int opt(int i, int j,String m, String n, int[][] T){
-			int sum1 = -1000000;
-			int sum2 = -1000000;
-			int sum3 = -1000000;
-			if(T[i][j] != 10000) {
-				return T[i][j];
-			}
-			if(i == 0 && j == 0) {
-				T[i][j] = 0;
-				return T[i][j];
-			}
-			if(i != 0) {
-				sum1 = opt(i-1, j, m, n, T) + score(m.charAt(i-1), '-');
-			}
-			if(j != 0) {
-				sum2 = opt(i, j-1, m, n, T) + score('-', n.charAt(j-1));
-			}
-			if(i != 0 && j != 0) {
-				sum3 = opt(i-1,j-1, m, n, T) + score(m.charAt(i-1), n.charAt(j-1));
-			}
-
-			T[i][j] = Math.max(Math.max(sum1, sum2), sum3);
+		int sum1 = -1000000;
+		int sum2 = -1000000;
+		int sum3 = -1000000;
+		if(T[i][j] != 10000) {
 			return T[i][j];
+		}
+		if(i == 0 && j == 0) {
+			T[i][j] = 0;
+			return T[i][j];
+		}
+		if(i != 0) {
+			sum1 = opt(i-1, j, m, n, T) + score(m.charAt(i-1), '-');
+		}
+		if(j != 0) {
+			sum2 = opt(i, j-1, m, n, T) + score('-', n.charAt(j-1));
+		}
+		if(i != 0 && j != 0) {
+			sum3 = opt(i-1,j-1, m, n, T) + score(m.charAt(i-1), n.charAt(j-1));
+		}
+		T[i][j] = Math.max(Math.max(sum1, sum2), sum3);
+		return T[i][j];
 	}
 
 
