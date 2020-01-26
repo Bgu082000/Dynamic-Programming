@@ -1,0 +1,100 @@
+/** Program to use the Karatsuba algorithm on two polynomials of large degrees
+    Recursively multiplies the coefficients of each polynomial
+    Each polynomial is split in half in each recursion
+    product of two polynomials, f and g is
+    (fhi*ghi)x^2k+((fhi+flo)(ghi+glo)-fhi*ghi-flo*glo)x^k+flo*glo
+    Works for polynomials of degree powers of 2         **/
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class KaratsubaMultiplication {
+  public static long[] karatsuba(long[] x, long[] y) {
+    long[] product = new long[x.length + y.length];
+    int degree = x.length;
+    if(degree == 1) {
+    for(int i = 0; i < y.length; i++) {
+      product[0] = y[0] * x[0];
+      }
+    }
+    else if(degree == 4) {   //Speeds up for small degree polynomials
+      product[0] = x[0]*y[0];
+      product[1] = x[0]*y[1]+x[1]*y[0];
+      product[2] = x[0]*y[2]+x[1]*y[1]+x[2]*y[0];
+      product[3] = x[0]*y[3]+x[1]*y[2]+x[2]*y[1]+x[3]*y[0];
+      product[4] = x[1]*y[3]+x[2]*y[2]+x[3]*y[1];
+      product[5] = x[2]*y[3]+x[3]*y[2];
+      product[6] = x[3]*y[3];
+      }
+		else {
+			int half = degree/2; //k
+			long[] xlow = new long[half]; //flo
+			long[] xhigh = new long[half]; //fhi
+			long[] ylow = new long[half];  //glo
+			long[] yhigh = new long[half]; //ghi
+			long[] xsum = new long[half];  //F = fhi + flo
+			long[] ysum = new long[half];  //G = ghi + glo
+			for(int i = 0; i < half; i++) {
+				xlow[i] = x[i];
+				xhigh[i] = x[i+half];
+				xsum[i] = xlow[i] + xhigh[i];
+				ylow[i] = y[i];
+				yhigh[i] = y[i+half];
+				ysum[i] = ylow[i] + yhigh[i];
+
+			}
+			long[] productlow = karatsuba(xlow, ylow);	//V = flo*glo
+			long[] producthigh = karatsuba(xhigh, yhigh); //U = fhi*ghi
+			long[] productsum = karatsuba(xsum, ysum);	//W = FG = (fhi+flo)(ghi+glo)
+
+			long[] productmiddle = new long[degree];
+			for(int i = 0; i < degree; i++) {
+				productmiddle[i] = productsum[i] - productlow[i] - producthigh[i];	//(W-U-V)
+			}
+
+			for(int i = 0; i < degree; i++) {
+				product[i] += productlow[i];	//V
+				product[i+degree] += producthigh[i];	//Ux^2k
+				product[i+half] += productmiddle[i];	//(W-U-V)x^k
+			}
+		}
+		return product;
+	}
+	public static void main(String[] args){
+		Scanner scan = new Scanner(System.in);
+		int degree = Integer.parseInt(scan.nextLine());
+		String curr = scan.nextLine();
+		String[] split = curr.split(" ");
+		long[] x = new long[degree+1];
+		for(int i = 0; i < degree+1; i++) {
+			x[i] = Integer.parseInt(split[i]);
+		}
+		curr = scan.nextLine();
+		String[] split2 = curr.split(" ");
+		long[] y = new long[degree+1];
+		for(int i = 0; i < degree+1; i++) {
+			y[i] = Integer.parseInt(split2[i]);
+		}
+		long[] product = karatsuba(x,y);
+		for(int i = product.length-1; i >= 0; i--) {
+			if(product[i] == 0) {
+				product[i] = -5;
+			}
+			else if(product[i] != 0) {
+				break;
+			}
+		}
+		for(int i = 0; i < product.length; i++) {
+			if(product[i] == -5) {	//getting rid of 0
+
+			}
+			else {
+			System.out.print(product[i]);
+			if(i != product.length-1) {
+				System.out.print(" ");
+			}
+			}
+
+		}
+	}
+}
