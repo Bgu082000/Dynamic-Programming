@@ -1,2 +1,2 @@
 # Projects
- Programs I have worked on to practice
+ Programs I have worked on for practice
