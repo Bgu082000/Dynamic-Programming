@@ -26,75 +26,71 @@ public class KaratsubaMultiplication {
       product[5] = x[2]*y[3]+x[3]*y[2];
       product[6] = x[3]*y[3];
       }
-		else {
-			int half = degree/2; //k
-			long[] xlow = new long[half]; //flo
-			long[] xhigh = new long[half]; //fhi
-			long[] ylow = new long[half];  //glo
-			long[] yhigh = new long[half]; //ghi
-			long[] xsum = new long[half];  //F = fhi + flo
-			long[] ysum = new long[half];  //G = ghi + glo
-			for(int i = 0; i < half; i++) {
-				xlow[i] = x[i];
-				xhigh[i] = x[i+half];
-				xsum[i] = xlow[i] + xhigh[i];
-				ylow[i] = y[i];
-				yhigh[i] = y[i+half];
-				ysum[i] = ylow[i] + yhigh[i];
+      else {
+        int half = degree/2; //k
+        long[] xlow = new long[half]; //flo
+        long[] xhigh = new long[half]; //fhi
+        long[] ylow = new long[half];  //glo
+        long[] yhigh = new long[half]; //ghi
+        long[] xsum = new long[half];  //F = fhi + flo
+        long[] ysum = new long[half];  //G = ghi + glo
+        for(int i = 0; i < half; i++) {
+          xlow[i] = x[i];
+          xhigh[i] = x[i+half];
+          xsum[i] = xlow[i] + xhigh[i];
+          ylow[i] = y[i];
+          yhigh[i] = y[i+half];
+          ysum[i] = ylow[i] + yhigh[i];
+        }
+        long[] productlow = karatsuba(xlow, ylow);	//V = flo*glo
+        long[] producthigh = karatsuba(xhigh, yhigh); //U = fhi*ghi
+        long[] productsum = karatsuba(xsum, ysum);	//W = FG = (fhi+flo)(ghi+glo)
+        long[] productmiddle = new long[degree];
+        for(int i = 0; i < degree; i++) {
+          productmiddle[i] = productsum[i] - productlow[i] - producthigh[i];	//(W-U-V)
+        }
+        for(int i = 0; i < degree; i++) {
+          product[i] += productlow[i];	//V
+          product[i+degree] += producthigh[i];	//Ux^2k
+          product[i+half] += productmiddle[i];	//(W-U-V)x^k
+        }
+      }
+      return product;
+    }
+    public static void main(String[] args){
+      Scanner scan = new Scanner(System.in);
+      int degree = Integer.parseInt(scan.nextLine());
+      String curr = scan.nextLine();
+      String[] split = curr.split(" ");
+      long[] x = new long[degree+1];
+      for(int i = 0; i < degree+1; i++) {
+        x[i] = Integer.parseInt(split[i]);
+      }
+      curr = scan.nextLine();
+      String[] split2 = curr.split(" ");
+      long[] y = new long[degree+1];
+      for(int i = 0; i < degree+1; i++) {
+        y[i] = Integer.parseInt(split2[i]);
+      }
+      long[] product = karatsuba(x,y);
+      for(int i = product.length-1; i >= 0; i--) {
+        if(product[i] == 0) {
+          product[i] = -5;
+        }
+        else if(product[i] != 0) {
+          break;
+        }
+      }
+      for(int i = 0; i < product.length; i++) {
+        if(product[i] == -5) {
 
-			}
-			long[] productlow = karatsuba(xlow, ylow);	//V = flo*glo
-			long[] producthigh = karatsuba(xhigh, yhigh); //U = fhi*ghi
-			long[] productsum = karatsuba(xsum, ysum);	//W = FG = (fhi+flo)(ghi+glo)
-
-			long[] productmiddle = new long[degree];
-			for(int i = 0; i < degree; i++) {
-				productmiddle[i] = productsum[i] - productlow[i] - producthigh[i];	//(W-U-V)
-			}
-
-			for(int i = 0; i < degree; i++) {
-				product[i] += productlow[i];	//V
-				product[i+degree] += producthigh[i];	//Ux^2k
-				product[i+half] += productmiddle[i];	//(W-U-V)x^k
-			}
-		}
-		return product;
-	}
-	public static void main(String[] args){
-		Scanner scan = new Scanner(System.in);
-		int degree = Integer.parseInt(scan.nextLine());
-		String curr = scan.nextLine();
-		String[] split = curr.split(" ");
-		long[] x = new long[degree+1];
-		for(int i = 0; i < degree+1; i++) {
-			x[i] = Integer.parseInt(split[i]);
-		}
-		curr = scan.nextLine();
-		String[] split2 = curr.split(" ");
-		long[] y = new long[degree+1];
-		for(int i = 0; i < degree+1; i++) {
-			y[i] = Integer.parseInt(split2[i]);
-		}
-		long[] product = karatsuba(x,y);
-		for(int i = product.length-1; i >= 0; i--) {
-			if(product[i] == 0) {
-				product[i] = -5;
-			}
-			else if(product[i] != 0) {
-				break;
-			}
-		}
-		for(int i = 0; i < product.length; i++) {
-			if(product[i] == -5) {	//getting rid of 0
-
-			}
-			else {
-			System.out.print(product[i]);
-			if(i != product.length-1) {
-				System.out.print(" ");
-			}
-			}
-
-		}
-	}
-}
+        }
+        else {
+          System.out.print(product[i]);
+          if(i != product.length-1) {
+            System.out.print(" ");
+          }
+        }
+      }
+    }
+  }
