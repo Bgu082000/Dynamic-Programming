@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 char** copy_board(char **board, int size){
     char **copy;
     copy = (char **)malloc(size * sizeof(char *));
@@ -13,6 +14,8 @@ char** copy_board(char **board, int size){
     }
     return copy;
 }
+
+//changes status for cells for each step in time
 void change_status(char **board, int row, int column, int live_neighbors){
     if(board[row][column] == 'x'){
         if(live_neighbors < 2 || live_neighbors >3){
@@ -32,6 +35,7 @@ void change_status(char **board, int row, int column, int live_neighbors){
     }
 }
 
+//checks each neighbors for the number of live neighbors
 void check_neighbors(char **board, char **copy, int row, int column, int size){
     int neighbors[8][2] = {{-1,-1}, {0,-1}, {1,-1}, {1,0}, {1,1}, {0,1}, {-1,1}, {-1,0}};
     int live_neighbors = 0;
@@ -44,6 +48,8 @@ void check_neighbors(char **board, char **copy, int row, int column, int size){
 
     change_status(board, row, column, live_neighbors);
 }
+
+
 void play_game(char **board, int ticks, int size){
     for(int i = 0; i < ticks; i++){
         char **copy = copy_board(board, size);
