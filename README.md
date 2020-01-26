@@ -1,2 +1,2 @@
-# Dynamic-Programming
- Programs using dynamic programming
+# Projects
+ Programs I have worked on to practice
